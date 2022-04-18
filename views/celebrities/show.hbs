@@ -1,0 +1,10 @@
+{{#with celebrity}}
+    <h2>Detailed information on {{name}}</h2>
+    <p>Name: {{name}}</p>
+    <p>Occupation: {{occupation}}</p>
+    <p>Catch Phrase: {{catchPhrase}}</p>
+
+    <form action="/celebrities/{{_id}}/edit">
+        <button type="submit">EDIT</button>
+    </form>
+{{/with}}
