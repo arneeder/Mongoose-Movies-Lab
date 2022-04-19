@@ -1,0 +1,12 @@
+<h1>Testing the movies show route</h1>
+
+{{#with movie}}
+    <h2>Detailed information on {{title}}</h2>
+    <p>Title: {{title}}</p>
+    <p>Genre: {{genre}}</p>
+    <p>Plot Phrase: {{plot}}</p>
+    {{#each cast}}
+        <p>{{name}}</p>
+    {{/each}}
+    <a href="/movies/{{_id}}/edit">EDIT</a>
+{{/with}}
