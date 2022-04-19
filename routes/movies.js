@@ -15,23 +15,34 @@ router.get('/movies', (req, res, next) => {
 router.get('/movies/:id/edit', (req, res, next) => {
     const id = req.params.id
     let arr = []
-    Celebrity.find()
-    .then(
-        celebritiesFromDB => {
-            arr = celebritiesFromDB.map(celebrity => {
-                return `<option value="${celebrity._id}">${celebrity.name}</option>`
-            })
-            console.log('CELEBRITY TAGS: ' + arr)
-        }
-    )
-    .catch(err => { next(err) })
+    let cast = []
+
     Movie.findById(id)
+        .then(movieFromDB => {
+            console.log('movieFromDB.cast' + movieFromDB.cast)
+            cast = movieFromDB.cast
+        })
+        .catch(err => { next(err) })
+    Celebrity.find()
+        .then(
+            celebritiesFromDB => {
+                arr = celebritiesFromDB.map(celebrity => {
+                    console.log('CAST: ' + cast)
+                    console.log('celebrity_id: ' + celebrity._id)
+                    if (cast.includes(celebrity._id)) {
+                        return `<option value="${celebrity._id}" selected>${celebrity.name}</option>`
+                    } else{
+                        return `<option value="${celebrity._id}">${celebrity.name}</option>`
+                    }
+                })
+                //console.log('CELEBRITY TAGS: ' + arr)
+            }
+        )
+        .catch(err => { next(err) })
+    
+        Movie.findById(id)
     .populate('cast')
     .then(movieFromDB => {
-        const cast = []
-        movieFromDB.cast.forEach(person => {
-            cast.push(person._id)
-        })
         res.render('../views/movies/edit.hbs', {movie: movieFromDB, celebrities: arr})
     })
     .catch(err => { next(err) })
