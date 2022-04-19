@@ -18,12 +18,9 @@ router.get('/movies/:id/edit', (req, res, next) => {
     let cast = []
 
     Movie.findById(id)
-        .then(movieFromDB => {
-            console.log('movieFromDB.cast' + movieFromDB.cast)
-            cast = movieFromDB.cast
-        })
-        .catch(err => { next(err) })
-    Celebrity.find()
+    .then(movieFromDB => {
+        cast = movieFromDB.cast
+        Celebrity.find()
         .then(
             celebritiesFromDB => {
                 arr = celebritiesFromDB.map(celebrity => {
@@ -35,10 +32,12 @@ router.get('/movies/:id/edit', (req, res, next) => {
                         return `<option value="${celebrity._id}">${celebrity.name}</option>`
                     }
                 })
-                //console.log('CELEBRITY TAGS: ' + arr)
             }
         )
         .catch(err => { next(err) })
+    })
+    .catch(err => { next(err) })
+    
     
         Movie.findById(id)
     .populate('cast')
