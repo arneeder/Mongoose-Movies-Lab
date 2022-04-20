@@ -27,16 +27,12 @@ router.get('/movies/:id/edit', (req, res, next) => {
         .then(
             celebritiesFromDB => {
                 let arr = celebritiesFromDB.map(celebrity => {
-                    console.log('Celebrity ID: ' + celebrity._id)
-                    console.log(castId.includes(celebrity._id))
                     if (castId.includes(String(celebrity._id))) {
                         return `<option value="${celebrity._id}" selected>${celebrity.name}</option>`
                     } else{
                         return `<option value="${celebrity._id}">${celebrity.name}</option>`
                     }
                 })
-                console.log(arr)
-                console.log({castId})
                 res.render('../views/movies/edit.hbs', {movie: movieFromDB, celebrities: arr})
             }
         )
